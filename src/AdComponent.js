@@ -63,8 +63,9 @@ const AdComponent = ({
 
   // Reset ad loaded flag when component unmounts
   useEffect(() => {
+    const currentAdId = adId.current; // Capture the current value
     return () => {
-      console.log(`Ad ${adId.current} component unmounting`);
+      console.log(`Ad ${currentAdId} component unmounting`);
       isAdLoaded.current = false;
     };
   }, []);

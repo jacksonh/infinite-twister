@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
+// Stop words and commands - moved outside component since they're constants
+const STOP_WORDS = ["stop", "pause", "halt", "freeze", "wait"];
+const START_WORDS = ["start", "go", "begin", "play", "continue", "resume"];
+
 const useVoiceControl = ({ onStop, onStart, onPause }) => {
   const [isListening, setIsListening] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
@@ -12,10 +16,6 @@ const useVoiceControl = ({ onStop, onStart, onPause }) => {
   useEffect(() => {
     callbacksRef.current = { onStop, onStart, onPause };
   }, [onStop, onStart, onPause]);
-
-  // Stop words and commands
-  const stopWords = ["stop", "pause", "halt", "freeze", "wait"];
-  const startWords = ["start", "go", "begin", "play", "continue", "resume"];
 
   // Initialize speech recognition ONLY ONCE
   useEffect(() => {
@@ -54,13 +54,13 @@ const useVoiceControl = ({ onStop, onStart, onPause }) => {
         console.log("Voice command heard:", transcript);
 
         // Check for stop words
-        if (stopWords.some((word) => transcript.includes(word))) {
+        if (STOP_WORDS.some((word) => transcript.includes(word))) {
           console.log("Voice: Stop command triggered");
           callbacksRef.current.onStop && callbacksRef.current.onStop();
         }
 
         // Check for start words
-        if (startWords.some((word) => transcript.includes(word))) {
+        if (START_WORDS.some((word) => transcript.includes(word))) {
           console.log("Voice: Start command triggered");
           callbacksRef.current.onStart && callbacksRef.current.onStart();
         }
