@@ -25,6 +25,6 @@ yarn-error.log*
 .vscode/
 .idea/
 
-# GitHub Pages
-/docs 
+# GitHub Pages - commented out to allow committing docs folder
+# /docs 
 node_modules
