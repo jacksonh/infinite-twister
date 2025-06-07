@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import "./App.css";
 import AdComponent from "./AdComponent";
+import useVoiceControl from "./VoiceControl";
 
 const COLORS = ["red", "yellow", "blue", "green"];
 const BODY_PARTS = [
@@ -29,6 +30,22 @@ function App() {
 
   const isPlayingRef = useRef(false);
   const spinIntervalRef = useRef(null); // Track the spin interval
+
+  // Voice control integration
+  const voiceControl = useVoiceControl({
+    onStop: () => {
+      if (isPlaying) {
+        stopGame();
+      }
+    },
+    onStart: () => {
+      if (!gameStarted) {
+        startGame();
+      } else if (!isPlaying) {
+        restartGame();
+      }
+    },
+  });
 
   // Update ref when isPlaying changes
   useEffect(() => {
@@ -181,9 +198,9 @@ function App() {
           viewBox="0 0 24 24"
           fill="none"
           stroke="#000000"
-          stroke-width="1"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
           <path d="M8 13v-7.5a1.5 1.5 0 0 1 3 0v6.5" />
           <path d="M11 5.5v-2a1.5 1.5 0 1 1 3 0v8.5" />
@@ -200,9 +217,9 @@ function App() {
           viewBox="0 0 24 24"
           fill="none"
           stroke="#000000"
-          stroke-width="1"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
           <path d="M13 3v6l4.798 5.142a4 4 0 0 1 -5.441 5.86l-6.736 -6.41a2 2 0 0 1 -.621 -1.451v-9.141h8z" />
           <path d="M7.895 15.768c.708 -.721 1.105 -1.677 1.105 -2.768a4 4 0 0 0 -4 -4" />
@@ -225,6 +242,22 @@ function App() {
             : "body parts on the colors"}{" "}
           as instructed.
         </p>
+
+        {/* Debug info for voice control */}
+        {voiceControl.isListening && (
+          <div
+            style={{
+              fontSize: "12px",
+              color: "#4CAF50",
+              marginTop: "5px",
+              padding: "5px",
+              background: "rgba(76, 175, 80, 0.1)",
+              borderRadius: "4px",
+            }}
+          >
+            🎤 Voice control active - try saying "stop" or "start"
+          </div>
+        )}
       </div>
 
       <div className="controls">
@@ -271,6 +304,57 @@ function App() {
               onChange={(e) => setPauseDuration(Number(e.target.value))}
             />
           </label>
+
+          {voiceControl.isSupported && (
+            <div className="voice-control">
+              <button
+                className="voice-button"
+                onClick={
+                  voiceControl.isListening
+                    ? voiceControl.stopListening
+                    : voiceControl.startListening
+                }
+                style={{
+                  backgroundColor: voiceControl.isListening
+                    ? "#ff9800"
+                    : "#9e9e9e",
+                  color: "white",
+                  border: "none",
+                  padding: "8px 16px",
+                  borderRadius: "4px",
+                  fontSize: "12px",
+                  cursor: "pointer",
+                  marginTop: "5px",
+                }}
+              >
+                🎤 {voiceControl.isListening ? "Voice ON" : "Voice OFF"}
+              </button>
+              <div
+                style={{ fontSize: "10px", color: "white", marginTop: "2px" }}
+              >
+                Say "stop" or "start"
+              </div>
+              {voiceControl.error && (
+                <div
+                  style={{
+                    fontSize: "9px",
+                    color: "#ffcdd2",
+                    marginTop: "2px",
+                  }}
+                >
+                  Error: {voiceControl.error}
+                </div>
+              )}
+            </div>
+          )}
+
+          {!voiceControl.isSupported && (
+            <div
+              style={{ fontSize: "10px", color: "#ffcdd2", marginTop: "5px" }}
+            >
+              Voice control not supported in this browser
+            </div>
+          )}
         </div>
       </div>
 
