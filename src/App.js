@@ -169,7 +169,7 @@ function App() {
   };
 
   const renderBodyPartIcon = (bodyPart) => {
-    const { side, type } = bodyPart;
+    const { type } = bodyPart;
 
     if (type === "hand") {
       return (
