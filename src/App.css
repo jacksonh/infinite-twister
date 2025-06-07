@@ -1,0 +1,80 @@
+/* Additional styles for smoother animations and better visual effects */
+.app {
+  user-select: none;
+}
+
+.body-part-icon text {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Remove the spinning animation from icons - they stay static now */
+.spinning .body-part-icon {
+  /* No animation - icons remain stationary during spin */
+}
+
+/* Pure color backgrounds instead of gradients */
+.app[style*="red"],
+.app[style="background-color: red"] {
+  background: #db4937 !important;
+}
+
+.app[style*="yellow"],
+.app[style="background-color: yellow"] {
+  background: #d8d145 !important;
+}
+
+.app[style*="blue"],
+.app[style="background-color: blue"] {
+  background: #4d76b5 !important;
+}
+
+.app[style*="green"],
+.app[style="background-color: green"] {
+  background: #51ae58 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .body-part-icon {
+    width: 250px;
+    height: 250px;
+  }
+
+  .game-info {
+    max-width: 250px;
+    font-size: 14px;
+  }
+
+  .controls {
+    right: 10px;
+    top: 10px;
+  }
+
+  .result-text {
+    font-size: 20px;
+    padding: 15px 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .body-part-icon {
+    width: 200px;
+    height: 200px;
+  }
+
+  .game-info {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin: 10px;
+    max-width: none;
+  }
+
+  .controls {
+    position: relative;
+    right: 0;
+    top: 0;
+    margin: 10px;
+    align-items: center;
+  }
+}
