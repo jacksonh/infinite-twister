@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import "./App.css";
+import AdComponent from "./AdComponent";
 
 const COLORS = ["red", "yellow", "blue", "green"];
 const BODY_PARTS = [
@@ -282,7 +283,7 @@ function App() {
           `${currentSelection.color.toUpperCase()} ${currentSelection.bodyPart.name.toUpperCase()}`}
       </div>
 
-      <div className="ads-placeholder">Google Ads Placeholder</div>
+      <AdComponent />
     </div>
   );
 }

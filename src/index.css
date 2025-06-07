@@ -89,6 +89,45 @@ body {
   font-size: 18px;
 }
 
+/* Google AdSense styling */
+.ad-container {
+  min-height: 90px;
+  background: #f8f9fa;
+  border-top: 2px solid #e9ecef;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ad-container ins {
+  min-height: 90px;
+  width: 100%;
+}
+
+/* Responsive ad adjustments */
+@media (max-width: 768px) {
+  .ad-container {
+    min-height: 80px;
+    padding: 8px;
+  }
+
+  .ad-container ins {
+    min-height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ad-container {
+    min-height: 70px;
+    padding: 5px;
+  }
+
+  .ad-container ins {
+    min-height: 70px;
+  }
+}
+
 .start-button {
   background: #4caf50;
   color: white;
